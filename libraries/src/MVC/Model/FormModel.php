@@ -227,12 +227,18 @@ abstract class FormModel extends BaseDatabaseModel implements FormFactoryAwareIn
 
         // Check the validation results.
         if ($return === false) {
-            // Get the validation messages from the form.
-            foreach ($form->getErrors() as $message) {
-                $this->setError($message);
-            }
+            $validationErrors = $form->getErrors();
 
-            return false;
+            if ($this->useExceptions === true) {
+                throw new Exception\DataValidationException('', ...$validationErrors);
+            } else {
+                // Get the validation messages from the form.
+                foreach ($validationErrors as $message) {
+                    $this->setError($message);
+                }
+
+                return false;
+            }
         }
 
         $data = $return;

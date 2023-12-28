@@ -41,6 +41,16 @@ abstract class BaseModel implements ModelInterface, StatefulModelInterface
     protected $name;
 
     /**
+     * Whether to throw errors using Exceptions (will default to true in the future) or to make methods return false
+     * and use the getError and getErrors to retrieve messages. Currently set to false during the development phase
+     * but allows extensions to opt in for future version compatibility.
+     *
+     * @var    boolean
+     * @since  __DEPLOY_VERSION__
+     */
+    protected $useExceptions = false;
+
+    /**
      * The include paths
      *
      * @var   array
